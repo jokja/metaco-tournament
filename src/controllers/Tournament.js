@@ -1,4 +1,4 @@
-const Tournament = require('../models/Tournament')
+const Tournament = require('../models').Tournament
 
 async function findAll (req, res) {
   let resObj = {

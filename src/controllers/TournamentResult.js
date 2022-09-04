@@ -1,7 +1,8 @@
 const axios = require('axios')
-const TournamentResult = require('../models/TournamentResult')
+const TournamentResult = require('../models').TournamentResult
 const { validationResult } = require('express-validator')
-const Team = require('../models/Team')
+const Team = require('../models').Team
+const Tournament = require('../models').Tournament
 
 const pointRules = { 1: 5, 2: 3, 3: 2 }
 const coinRules = { 1: 5, 2: 3, 3: 2 }
@@ -44,16 +45,11 @@ async function findAll (req, res) {
     success: true,
     data: null
   }
-  
+
   await TournamentResult.findAll({
     include: [
-      {
-        as: 'teams',
-        // association: Blog.associations.blogUsers,
-        attributes: [],
-        model: Team,
-        where: { id: TournamentResult.team_id }
-      }
+      { as: 'team', model: Team },
+      { as: 'tournament', model: Tournament }
     ]
   }).then(response => {
     resObj.data = response
@@ -107,6 +103,7 @@ async function update (req, res) {
   await TournamentResult.update(data, { where: { id }}
   ).then(response => {
     resObj.data = response
+    resObj.message = 'Successfully update tournament result'
     res.status(200).json(resObj)
   }).catch(error => {
     resObj.success = false
@@ -127,6 +124,7 @@ async function destroy (req, res) {
     { where: { id }}
   ).then(response => {
     resObj.data = response
+    resObj.message = 'Successfully delete tournament result'
     res.status(200).json(resObj)
   }).catch(error => {
     resObj.success = false

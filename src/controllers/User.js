@@ -1,4 +1,4 @@
-const Team = require('../models').Team
+const User = require('../models').User
 
 async function findAll (req, res) {
   let resObj = {
@@ -6,7 +6,7 @@ async function findAll (req, res) {
     data: null
   }
   
-  await Team.findAll().then(response => {
+  await User.findAll().then(response => {
     resObj.data = response
     res.status(200).json(resObj)
   }).catch(error => {
