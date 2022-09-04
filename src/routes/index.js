@@ -3,6 +3,7 @@ const router = express.Router()
 const tournamentResultController = require("../controllers/TournamentResult.js")
 const tournamentController = require("../controllers/Tournament.js")
 const teamController = require("../controllers/Team.js")
+const userController = require("../controllers/User.js")
 const { body } = require('express-validator')
 
 let routes = app => {
@@ -36,6 +37,10 @@ let routes = app => {
   router.get(
     "/tournament",
     tournamentController.findAll
+  )
+  router.get(
+    "/user",
+    userController.findAll
   )
 
   return app.use("/", router);
