@@ -1,41 +1,34 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../database');
-const Team = require('./Team');
-const User = require('./User');
-
-class TeamMember extends Model {};
-
-TeamMember.init({
-  user_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: User,
-      key: 'id'
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class TeamMember extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      TeamMember.belongsTo(models.Team, {
+        foreignKey: "team_id",
+        as: "team",
+      })
+      TeamMember.belongsTo(models.User, {
+        foreignKey: "user_id",
+        as: "user",
+      })
     }
-  },
-  team_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Team,
-      key: 'id'
-    }
-  },
-  roles: {
-    type: DataTypes.STRING
-  },
-  ingame_id: {
-    type: DataTypes.STRING
-  },
-  created_at: {
-    type: DataTypes.DATE
-  },
-  updated_at: {
-    type: DataTypes.DATE
   }
-}, {
-  sequelize,
-  modelName: 'team_member',
-  timestamps: false
-})
-
-module.exports = TeamMember;
+  TeamMember.init({
+    user_id: DataTypes.INTEGER,
+    team_id: DataTypes.INTEGER,
+    roles: DataTypes.STRING,
+    ingame_id: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'TeamMember',
+  });
+  return TeamMember;
+};
