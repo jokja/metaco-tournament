@@ -1,16 +1,15 @@
 const express = require('express')
 const app = express();
-const sequelize = require('./database')
 const cors = require('cors');
 
 //models
-// var models = require("./models");
+var models = require("./models");
 
 // routes
 const initRoutes = require("./routes");
 
 //Sync Database
-sequelize.sync().then(function() {
+models.sequelize.sync().then(function() {
   console.log('connected to database')
 }).catch(function(err) {
   console.log(err)
