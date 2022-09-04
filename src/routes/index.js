@@ -19,6 +19,14 @@ let routes = app => {
     tournamentResultController.findAll
   )
   router.get(
+    "/tournament-leaderboard",
+    tournamentResultController.leaderboard
+  )
+  router.get(
+    "/tournament-result-sum",
+    tournamentResultController.findAllSum
+  )
+  router.get(
     "/tournament-result/:id",
     tournamentResultController.findOne
   )
