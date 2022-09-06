@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express();
 const cors = require('cors');
+require('dotenv').config();
 
 //models
 var models = require("./models");
@@ -23,7 +24,7 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 initRoutes(app);
 
-let port = 8000;
+let port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`Running at localhost:${port}`)
 });
